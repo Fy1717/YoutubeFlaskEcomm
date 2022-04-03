@@ -1,0 +1,27 @@
+STEPS:
+
+1 - Proje ismimizle bir dosya oluşturalım
+2 - Bu dosya içinde üç ayrı dosya daha oluşturacağız
+    a) __init__.py 
+        - SqlAlchemy i import edelim
+        - SqlAlchemy den bir db örneği yaratalım 
+        - createApp fonksiyonu oluşturalım
+        - flask appimizi oluşturduğumuz kısmı buraya taşıyalım
+        - oluşturduğumuz app üzerinden db connection ayarlarını yapalım (app.config üzerinden)
+        - daha önce oluşturduğumuz db ye app imizi set edelim
+
+    b) models.py 
+        - dataclass ı import edelim (class'larımızın databasede tabloyu temsil edebilmesi için)
+        - __init__.py de oluşturduğumuz db'yi (SqlAlchemy den türetilen) import edelim
+        - istediğimiz fieldlara sahip database tablomuzu bir dataclass örneği ile oluşturalım
+
+    c) initialize_db.py
+        - models dosyamızdan db yi import edelim (__init__.py de oluşturup models de dataclassları oluşturmuştuk)
+        - createApp i import edelim (db yi oluşturmak için kullanacağız) 
+        - createDB fonksiyonu oluşturup database'imizi yaratalım (db.create_all(app=createApp()))
+
+3 - Projemizi çalıştırdığımız app.py dosyamızda createApp ve createDB yi çalıştıralım
+
+    
+
+

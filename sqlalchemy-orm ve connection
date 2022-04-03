@@ -1,0 +1,17 @@
+SQLALCHEMY ve ORM (Object-Relational Mapping):
+
+- SqlAlchemy Python dili için geliştirilmiş bir ORM kütüphanesidir 
+- Veritabanı tabloları Python objeleri ile eşleştirilir 
+- Bu objeler üzerinden veritabanı işlemleri çok daha basit şekilde yapılır
+- ORM sayesinde veritabanı türü bağımsız çalışabiliriz, böylece veritabanı geçişi çok daha kolay olur
+- ORM kullanmak için sql dili bilmemize gerek kalmaz (Yine de temel anlamda öğrenilmesi tavsiye edilir)
+
+
+Bazı ORM Örnekleri:
+
+C Sharp: Entity Framework,  Dapper, ECO, XPO, Norm
+Java: Hibernate, Ebean, Torque, JPA,MyBattis
+Php: CakePHP, Codelgniter, RedBean, Doctrine,Propel, PdoMap
+Python: Django, South,Storm, SqlAlchemy
+
+
