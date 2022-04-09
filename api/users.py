@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, Blueprint
+from flask import Flask, jsonify, Blueprint, request
 
 apiUsers = Blueprint('apiUser', __name__, url_prefix='/api/users')
 
@@ -17,3 +17,13 @@ def user(id):
     user = {"id": 2, "name": "oguz", "surname": "demir", "age": 25}
 
     return jsonify({"success": True, "data": user})
+
+@apiUsers.route("/addUser", methods=['GET', 'POST'])
+def addUser():
+    if request.method == 'POST':
+        print("method : " + request.method)
+        print("params : " + request.args)
+        print("data : " + request.data)
+
+
+    return jsonify({"success": True, "message": "User Added"})
