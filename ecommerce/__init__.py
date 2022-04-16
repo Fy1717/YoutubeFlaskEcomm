@@ -8,8 +8,10 @@ db = SQLAlchemy()
 
 def createApp():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/ecommerce"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = "postgresql://postgres:postgres@localhost:5432/ecommerce"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     CORS(app)
 

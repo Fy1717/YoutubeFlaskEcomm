@@ -1,0 +1,18 @@
+Class içerisinde @classmethod başlığı ile kullanabileceğimiz bir decorator türüdür.
+
+Class attribute ve instance attributeleri ile ilgili işlemler yapmak istediğimizde 
+direkt class içinde tanımlayabileceğimiz fonksiyonlardır.
+
+Unutmayalım ki classmethod lar ilk parametre olarak class ın kendisini alırlar. (cls)
+
+Buradaki mantık aslında self mantığı ile aynı mantıktır. 
+Self propertie leri hatırlarken cls class ın kendisini hatırlar.
+
+'cls' parametresini incelediğimizde:
+
+(parameter) cls: Type[Self@ClassName] benzeri bir açıklama ile karşılaşırız.
+
+Bu da 'cls' nin bir function parameter olduğunu ve 'ClassName' classını temsil ettiğini gösterir.
+
+
+
