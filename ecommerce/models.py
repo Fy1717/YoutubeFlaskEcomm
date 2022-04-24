@@ -4,23 +4,25 @@ from ecommerce import db
 
 @dataclass
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120))
     email = db.Column(db.String(120))
     password = db.Column(db.String(120))
+    activated = db.Column(db.Boolean, default=True)
 
-    def __init__(self, id, username, email, password):
+    def __init__(self, id, username, email, password, activated):
         self.id = id
         self.username = username
         self.email = email
         self.password = password
+        self.activated = activated
 
     @classmethod
     def get_all_users(cls):
         return cls.query.all()
-    
+
     @classmethod
     def get_user_by_id(cls, id):
         return cls.query.filter_by(id=id).first()
@@ -30,8 +32,9 @@ class User(db.Model):
         print("USERNAME CM: ", username)
         print("EMAIL CM: ", email)
         print("PASSWORD CM: ", password)
+        print("ACTIVATED CM: ", "DEFAULT TRUE")
 
-        user = cls(None, username, email, password)
+        user = cls(None, username, email, password, True)
 
         db.session.add(user)
         db.session.commit()
@@ -50,19 +53,32 @@ class User(db.Model):
         db.session.delete(user)
         db.session.commit()
 
+    @classmethod
+    def activate_user(cls, id):
+        user = cls.query.filter_by(id=id).first()
+        user.activated = True
+        db.session.commit()
+
+    @classmethod
+    def deactivate_user(cls, id):
+        user = cls.query.filter_by(id=id).first()
+        user.activated = False
+        db.session.commit()
+
+
 @dataclass
 class Admin(db.Model):
-    __tablename__ = 'admin'
+    __tablename__ = "admin"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     email = db.Column(db.String(120))
     password = db.Column(db.String(120))
-    mod = db.Column(db.Integer)
+    mod = db.Column(db.Integer, default=0)
 
-    def __init__(self, id, username, email, password, mod):
+    def __init__(self, id, name, email, password, mod):
         self.id = id
-        self.username = username
+        self.name = name
         self.email = email
         self.password = password
         self.mod = mod
@@ -76,18 +92,17 @@ class Admin(db.Model):
         return cls.query.filter_by(id=id).first()
 
     @classmethod
-    def add_admin(cls, name, email, password, mod):
-        admin = cls(name, email, password, mod)
+    def add_admin(cls, name, email, password):
+        admin = cls(None, name, email, password, 0)
         db.session.add(admin)
         db.session.commit()
 
     @classmethod
-    def update_admin(cls, id, name, email, password, mod):
+    def update_admin(cls, id, name, email, password):
         admin = cls.query.filter_by(id=id).first()
         admin.name = name
         admin.email = email
         admin.password = password
-        admin.mod = mod
         db.session.commit()
 
     @classmethod
@@ -96,9 +111,10 @@ class Admin(db.Model):
         db.session.delete(admin)
         db.session.commit()
 
+
 @dataclass
 class Category(db.Model):
-    __tablename__ = 'category'
+    __tablename__ = "category"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
@@ -117,7 +133,7 @@ class Category(db.Model):
 
     @classmethod
     def add_category(cls, name):
-        category = cls(name)
+        category = cls(None, name)
         db.session.add(category)
         db.session.commit()
 
@@ -133,16 +149,17 @@ class Category(db.Model):
         db.session.delete(category)
         db.session.commit()
 
+
 @dataclass
 class Product(db.Model):
-    __tablename__ = 'product'
+    __tablename__ = "product"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     price = db.Column(db.Float)
     oldPrice = db.Column(db.Float)
     description = db.Column(db.String(120))
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
 
     def __init__(self, id, name, price, oldPrice, description, category_id):
         self.id = id
@@ -162,7 +179,7 @@ class Product(db.Model):
 
     @classmethod
     def add_product(cls, name, price, oldPrice, description, category_id):
-        product = cls(name, price, oldPrice, description, category_id)
+        product = cls(None, name, price, oldPrice, description, category_id)
         db.session.add(product)
         db.session.commit()
 
@@ -181,4 +198,3 @@ class Product(db.Model):
         product = cls.query.filter_by(id=id).first()
         db.session.delete(product)
         db.session.commit()
-
