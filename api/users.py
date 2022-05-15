@@ -1,4 +1,6 @@
-from flask import Flask, jsonify, Blueprint, request
+from flask import jsonify, Blueprint, request
+from werkzeug.security import generate_password_hash
+
 from ecommerce.models import User
 
 apiUsers = Blueprint("apiUser", __name__, url_prefix="/api/users")
@@ -70,7 +72,9 @@ def user(id):
             if password == None:
                 password = user.password
 
-            User.update_user(id, username, email, password)
+            hashed_password = generate_password_hash(password)
+
+            User.update_user(id, username, email, hashed_password)
 
             return jsonify({"success": True, "message": "User updated"})
 
@@ -88,13 +92,18 @@ def addUser():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        """ print("USERNAME: ", username)
+        print("USERNAME: ", username)
         print("EMAIL: ", email)
         print("PASSWORD: ", password)
 
-        print("------------------") """
+        if username == None or email == None or password == None:
+            return jsonify({"success": False, "message": "Missing fields"})
 
-        User.add_user(username, email, password)
+        hashed_password = generate_password_hash(password)
+
+        print("HASHED PASSWORD: ", hashed_password)
+
+        User.add_user(username, email, hashed_password)
 
         return jsonify({"success": True, "message": "User added successfully.."})
     except Exception as e:

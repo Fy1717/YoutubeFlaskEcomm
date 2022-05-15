@@ -7,9 +7,9 @@ class User(db.Model):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120))
-    email = db.Column(db.String(120))
-    password = db.Column(db.String(120))
+    username = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
     activated = db.Column(db.Boolean, default=True)
 
     def __init__(self, id, username, email, password, activated):
@@ -29,11 +29,6 @@ class User(db.Model):
 
     @classmethod
     def add_user(cls, username, email, password):
-        print("USERNAME CM: ", username)
-        print("EMAIL CM: ", email)
-        print("PASSWORD CM: ", password)
-        print("ACTIVATED CM: ", "DEFAULT TRUE")
-
         user = cls(None, username, email, password, True)
 
         db.session.add(user)
@@ -71,8 +66,8 @@ class Admin(db.Model):
     __tablename__ = "admin"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    email = db.Column(db.String(120))
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120))
     mod = db.Column(db.Integer, default=0)
 

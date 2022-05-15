@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, Blueprint, request
+from flask import jsonify, Blueprint, request
+from werkzeug.security import generate_password_hash
 
 from ecommerce.models import Admin
 
@@ -41,7 +42,9 @@ def add_admin():
         if password == None:
             return jsonify({"success": False, "message": "Password is required"})
 
-        Admin.add_admin(name, email, password)
+        hashed_password = generate_password_hash(password)
+
+        Admin.add_admin(name, email, hashed_password)
 
         return jsonify({"success": True, "message": "Admin added successfully"})
     except Exception as e:
@@ -92,7 +95,9 @@ def admin(id):
             if password == None:
                 password = admin.password
 
-            Admin.update_admin(id, name, email, password)
+            hashed_password = generate_password_hash(password)
+
+            Admin.update_admin(id, name, email, hashed_password)
 
             return jsonify({"success": True, "message": "Admin updated"})
 
