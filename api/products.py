@@ -1,9 +1,7 @@
+from ecommerce.models import Product
 from flask import Flask, jsonify, Blueprint, request
 
 apiProducts = Blueprint("apiProducts", __name__, url_prefix="/api/products")
-
-
-from ecommerce.models import Product
 
 
 @apiProducts.route("/")
@@ -106,7 +104,8 @@ def product(id):
             if category_id == None:
                 category_id = product.category_id
 
-            Product.update_product(id, name, price, oldPrice, description, category_id)
+            Product.update_product(
+                id, name, price, oldPrice, description, category_id)
 
             return jsonify({"success": True, "message": "product updated"})
 

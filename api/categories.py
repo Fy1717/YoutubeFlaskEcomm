@@ -1,8 +1,8 @@
+from ecommerce.models import Category
 from flask import Flask, jsonify, Blueprint, request
 
-apiCategories = Blueprint("apiCategories", __name__, url_prefix="/api/categories")
-
-from ecommerce.models import Category
+apiCategories = Blueprint("apiCategories", __name__,
+                          url_prefix="/api/categories")
 
 
 @apiCategories.route("/")
